@@ -1,0 +1,32 @@
+infrastructure:
+  vpc:
+    name:
+    cidr_block:
+    tag:
+
+    public_subnet:
+      subnet_cidr_block:
+      map_public_ip_on_launch:
+      availability_zone:
+      tag:
+
+    private_subnet:
+      subnet_cidr_block:
+      map_public_ip_on_launch:
+      availability_zone:
+      tag:
+
+    route_table:
+      destination:
+      target:
+
+  igw:
+    vpc_id:
+
+  nat_gateway:
+    allocation_id:
+    subnet_id:
+
+  eip:
+    domain: vpc
+

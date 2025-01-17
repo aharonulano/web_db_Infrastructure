@@ -1,0 +1,9 @@
+.auto.tfvars
+.terraform*
+terraform.tfstate
+terraform.tfstate.backup
+aside.tf
+commands_for_documention.txt
+next_steps.txt
+planing.txt
+qustions
