@@ -21,7 +21,7 @@ terraform {
   backend "s3" {
     bucket  = "my-tf-satae-bucket-stor"
     key     = "my_tf_statefdfffdf"
-    profile = "efualt" # "au-test"
+    profile = "defualt" # "au-test"
     region  = "eu-west-1"
   }
 }
