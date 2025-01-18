@@ -110,6 +110,7 @@ resource "aws_security_group" "public_sg" {
 }
 
 resource "aws_security_group_rule" "allow_http" {
+  description = "allow port 80 to ingress the ec2 protocol name HTTP"
   type              = "ingress"
   from_port         = 80
   to_port           = 80
@@ -120,6 +121,7 @@ resource "aws_security_group_rule" "allow_http" {
 
 
 resource "aws_security_group_rule" "allow_http_via_web" {
+  description = "allow http via web"
   type              = "ingress"
   from_port         = 7104
   to_port           = 7104
@@ -138,6 +140,7 @@ resource "aws_security_group_rule" "allow_http_via_web" {
 # }
 
 resource "aws_security_group_rule" "allow_ssh" {
+  description = "allow ssh port 22"
   type              = "ingress"
   from_port         = 22
   to_port           = 22
@@ -156,6 +159,7 @@ resource "aws_security_group_rule" "allow_ssh" {
 # }
 
 resource "aws_security_group_rule" "allow_all_outbound" {
+  description = "allow ingress all"
   type              = "egress"
   from_port         = 0
   to_port           = 0
@@ -198,6 +202,7 @@ resource "aws_security_group" "private_sg" {
   # }
 
   ingress {
+    description = "allow traffic to the rds mysql database"
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
@@ -242,7 +247,6 @@ resource "aws_instance" "web_ec2" {
     root_block_device {
       encrypted = true
   }
-
 
     ebs_block_device {
     device_name = "/dev/sdg"
