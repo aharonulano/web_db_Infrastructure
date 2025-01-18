@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      AWS_REGION: 'us-east-1'
+      AWS_REGION: 'eu-west-1'
       TF_VERSION: '1.4.0'
 
     steps:
