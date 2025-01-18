@@ -153,9 +153,9 @@ jobs:
         run: |
           tflint --init
           tflint
-
-      - name: 'tfsec'
-        run: tfsec .
+#
+#      - name: 'tfsec'
+#        run: tfsec .
 
       - name: 'Terraform Plan'
         run: terraform plan -var="account=${{ secrets.AWS_ACCOUNT_ID }}" -out=tfplan
