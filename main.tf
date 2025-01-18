@@ -262,6 +262,18 @@ resource "aws_vpc_endpoint" "ec2" {
 
   private_dns_enabled = true
 }
+resource "aws_db_parameter_group" "custom_mysql" {
+  name        = "custom-mysql8-parameter-group"
+  family      = "mysql8.0"
+  description = "Custom parameter group for MySQL 8.0"
+
+  # Example of a custom parameter
+  parameter {
+    name  = "max_connections"
+    value = "200"
+  }
+}
+
 
 resource "aws_db_instance" "private_db" {
   allocated_storage    = 10
@@ -271,7 +283,7 @@ resource "aws_db_instance" "private_db" {
   instance_class       = "db.t3.micro"
   username             = "aumichome"
   password             = "assignment"
-  parameter_group_name = "default.mysql8.0"
+  parameter_group_name = aws_db_parameter_group.custom_mysql.name
   # multi_az               = false
   skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.private_sg.id]
