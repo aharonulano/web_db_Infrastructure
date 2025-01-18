@@ -281,7 +281,7 @@ resource "aws_db_instance" "private_db" {
 resource "aws_db_subnet_group" "sub_group" {
   subnet_ids = [aws_subnet.private_db_sub_1.id, aws_subnet.private_db_sub_2.id]
 }
-
+#
 # resource "aws_network_acl" "main" {
 #   vpc_id = aws_vpc.main.id
 #
