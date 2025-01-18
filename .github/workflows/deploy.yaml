@@ -66,8 +66,8 @@ jobs:
 #    - name: 'tfsec'
 #      run: tfsec #.
 
-    - name: 'Terraform Plan'
-      run: terraform plan -var="account=${{ secrets.AWS_ACCOUNT_ID }}" -out=tfplan
+#    - name: 'Terraform Plan'
+#      run: terraform plan -var="account=${{ secrets.AWS_ACCOUNT_ID }}" -out=tfplan
 
     - name: tf plan
       run: terraform plan -var="account=$AWS_ACCOUNT_ID" -out=tfplan
