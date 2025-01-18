@@ -157,12 +157,10 @@ jobs:
 #      - name: 'tfsec'
 #        run: tfsec .
 
-      - name: 'Terraform Plan'
-        run: terraform plan -var="account=${{ secrets.AWS_ACCOUNT_ID }}" -out=tfplan
+      - name: Terraform Plan
+        run: terraform plan -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
 
-      - name: Mask AWS Account ID
-        run: echo "::add-mask::${{ secrets.AWS_ACCOUNT_ID }}"
-
-      - name: 'Terraform Apply'
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve tfplan
+      # Step 6 (Optional): Terraform Apply
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
