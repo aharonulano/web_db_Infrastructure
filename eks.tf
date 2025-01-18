@@ -124,9 +124,9 @@ resource "aws_eks_node_group" "main" {
   }
 }
 
-data "aws_eks_cluster_auth" "main" {
-  name = aws_eks_cluster.main.name
-}
+# data "aws_eks_cluster_auth" "main" {
+#   name = aws_eks_cluster.main.name
+# }
 
 resource "helm_release" "argocd" {
   depends_on = [aws_eks_node_group.main]
