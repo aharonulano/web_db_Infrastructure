@@ -158,9 +158,11 @@ jobs:
 #        run: tfsec .
 
       - name: Terraform Plan
-        run: terraform plan -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
+        env: ${{ secrets.AWS_ACCOUNT_ID }}
+        run: terraform plan -var="account_id=${AWS_ACCOUNT_ID"
 
       # Step 6 (Optional): Terraform Apply
       - name: Terraform Apply
+        env: ${{ secrets.AWS_ACCOUNT_ID }}
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
+        run: terraform apply -auto-approve -var="account_id=$AWS_ACCOUNT_ID"
