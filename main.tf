@@ -10,7 +10,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false #true
   availability_zone       = "${var.aws_region}a"
   tags = {
     Name = "public-subnet"
@@ -235,7 +235,22 @@ resource "aws_instance" "web_ec2" {
   #   device_index         = 0
   #   network_interface_id = ""
   # }
+    metadata_options {
+     http_tokens = "required"
+     }
 
+    root_block_device {
+      encrypted = true
+  }
+
+
+    ebs_block_device {
+    device_name = "/dev/sdg"
+    volume_size = 5
+    volume_type = "gp2"
+    delete_on_termination = true
+    encrypted = true
+  }
 
   user_data = <<-EOF
               #!/bin/bash
@@ -284,6 +299,9 @@ resource "aws_db_instance" "private_db" {
   username             = "aumichome"
   password             = "assignment"
   parameter_group_name = aws_db_parameter_group.custom_mysql.name
+  storage_encrypted  = true
+   backup_retention_period = 5
+  deletion_protection = true
   # multi_az               = false
   skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.private_sg.id]

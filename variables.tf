@@ -38,7 +38,7 @@ variable "my_local_ip" {
 
 variable "cidr_allow_all" {
   type    = string
-  default = "0.0.0.0/0"
+  default = "1.2.3.4/32"
 }
 
 variable "domain_mydevops_link" {

@@ -17,11 +17,11 @@ provider "aws" {
 }
 
 
-# terraform {
-#   backend "s3" {
-#     bucket  = "my-tf-satae-bucket-stor"
-#     key     = "my_tf_statefdfffdf"
-#     profile = "defualt"
-#     region  = "eu-west-1"
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket  = "my-tf-satae-bucket-stor"
+    key     = "my_tf_statefdfffdf"
+    profile = "au-test"
+    region  = "eu-west-1"
+  }
+}
