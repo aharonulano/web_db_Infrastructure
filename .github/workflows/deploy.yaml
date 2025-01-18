@@ -69,6 +69,14 @@ jobs:
     - name: 'Terraform Plan'
       run: terraform plan -var="account=${{ secrets.AWS_ACCOUNT_ID }}" -out=tfplan
 
+    - name: tf plan
+      run: terraform plan -var="account=$AWS_ACCOUNT_ID" -out=tfplan
+
+    - name: Mask AWS Account ID
+      run: echo "::add-mask::${{ secrets.AWS_ACCOUNT_ID }}"
+
+
+
     - name: 'Terraform Apply'
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve tfplan
