@@ -1,7 +1,7 @@
-variable "account" {
-  description = "(Required) account ID"
-  type        = string
-}
+# variable "account" {
+#   description = "(Required) account ID"
+#   type        = string
+# }
 
 variable "profile_name" {
   description = "(Required) profile name"
@@ -11,6 +11,7 @@ variable "profile_name" {
 variable "aws_region" {
   description = "(Required) region in which you well deploy your resources"
   type        = string
+  default = "eu-west-1"
 }
 
 variable "ec2_ami" {
