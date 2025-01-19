@@ -8,7 +8,8 @@ next_steps.txt
 planing.txt
 qustions
 k8s_yaml_files/eks.tf
-polices.tf
-k8s_yaml_files
+k8s_yaml_files/polices.tf
+./k8s_yaml_files/*
 k8s_yaml_files/route53.tf
 web_db_infra.yaml
+
