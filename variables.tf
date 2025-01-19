@@ -31,7 +31,7 @@ variable "instance_type" {
 variable "ec2_key" {
   type      = string
   default   = "~/.ssh/ec2_key.pub"
-  sensitive = true
+  # sensitive = true
 }
 
 variable "my_local_ip" {
