@@ -1,12 +1,13 @@
 variable "account" {
   description = "(Required) account ID"
   type        = string
+  default = "put/here/your/account/id"
 }
 
 variable "profile_name" {
   description = "(Required) profile name"
   type        = string
-  default = "defualt"
+  default     = "defualt"
 }
 
 variable "aws_region" {
@@ -18,10 +19,7 @@ variable "aws_region" {
 variable "ec2_ami" {
   description = "(Required) ami for ec2 for example aws linux 2 ami"
   type        = string
-  #   default = "ami-05576a079321f21f8"
-  #   default = "ami-0130c3a072f3832ff"
-  #   "ami-01f5f2e96f603b15b"
-  default = "ami-01f5f2e96f603b15b"
+  default     = "ami-01f5f2e96f603b15b"
 }
 
 variable "instance_type" {
@@ -29,14 +27,14 @@ variable "instance_type" {
   default = "t3.micro"
 }
 
-# variable "ec2_key" {
-#   type      = string
-#   default   = "~/.ssh/ec2_key.pub"
-#   # sensitive = true
-# }
+variable "ec2_key" {
+  type    = string
+  default = "~/.ssh/ec2_key.pub"
+  # sensitive = true
+}
 
 variable "my_local_ip" {
-  type = string
+  type    = string
   default = "0.0.0.0/0"
 }
 

@@ -8,12 +8,3 @@ output "db_rds_endpoint" {
   description = "DB endpoint to connect from the EC2 instance"
 }
 
-output "ec2_endpoint" {
-  value       = aws_vpc_endpoint.ec2.id
-  description = "vpc endpoint endpoint for ec2"
-}
-
-output "dns_entry" {
-  value       = aws_vpc_endpoint.ec2.dns_entry
-  description = "dns a domain name system to entry ec2 via private endpoint via link"
-}

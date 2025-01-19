@@ -8,9 +8,9 @@ locals {
 provider "aws" {
   allowed_account_ids = local.allowed_account_ids
   region              = local.region
-  profile = local.profile_name
+  profile             = local.profile_name
 
-# provider "aws" {
+
   default_tags {
     tags = {
       managed_by = "terraform"
