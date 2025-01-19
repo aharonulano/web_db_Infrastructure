@@ -110,7 +110,7 @@ resource "aws_security_group" "public_sg" {
 }
 
 resource "aws_security_group_rule" "allow_http" {
-  description = "allow port 80 to ingress the ec2 protocol name HTTP"
+  description       = "allow port 80 to ingress the ec2 protocol name HTTP"
   type              = "ingress"
   from_port         = 80
   to_port           = 80
@@ -121,7 +121,7 @@ resource "aws_security_group_rule" "allow_http" {
 
 
 resource "aws_security_group_rule" "allow_http_via_web" {
-  description = "allow http via web"
+  description       = "allow http via web"
   type              = "ingress"
   from_port         = 7104
   to_port           = 7104
@@ -140,7 +140,7 @@ resource "aws_security_group_rule" "allow_http_via_web" {
 # }
 
 resource "aws_security_group_rule" "allow_ssh" {
-  description = "allow ssh port 22"
+  description       = "allow ssh port 22"
   type              = "ingress"
   from_port         = 22
   to_port           = 22
@@ -159,7 +159,7 @@ resource "aws_security_group_rule" "allow_ssh" {
 # }
 
 resource "aws_security_group_rule" "allow_all_outbound" {
-  description = "allow ingress all"
+  description       = "allow ingress all"
   type              = "egress"
   from_port         = 0
   to_port           = 0
@@ -240,20 +240,20 @@ resource "aws_instance" "web_ec2" {
   #   device_index         = 0
   #   network_interface_id = ""
   # }
-    metadata_options {
-     http_tokens = "required"
-     }
-
-    root_block_device {
-      encrypted = true
+  metadata_options {
+    http_tokens = "required"
   }
 
-    ebs_block_device {
-    device_name = "/dev/sdg"
-    volume_size = 5
-    volume_type = "gp2"
-    delete_on_termination = true
+  root_block_device {
     encrypted = true
+  }
+
+  ebs_block_device {
+    device_name           = "/dev/sdg"
+    volume_size           = 5
+    volume_type           = "gp2"
+    delete_on_termination = true
+    encrypted             = true
   }
 
   user_data = <<-EOF
@@ -295,17 +295,17 @@ resource "aws_db_parameter_group" "custom_mysql" {
 
 
 resource "aws_db_instance" "private_db" {
-  allocated_storage    = 10
-  db_name              = "mydb"
-  engine               = "mysql"
-  engine_version       = "8.0"
-  instance_class       = "db.t3.micro"
-  username             = "aumichome"
-  password             = "assignment"
-  parameter_group_name = aws_db_parameter_group.custom_mysql.name
-  storage_encrypted  = true
-   backup_retention_period = 5
-  deletion_protection = true
+  allocated_storage       = 10
+  db_name                 = "mydb"
+  engine                  = "mysql"
+  engine_version          = "8.0"
+  instance_class          = "db.t3.micro"
+  username                = "aumichome"
+  password                = "assignment"
+  parameter_group_name    = aws_db_parameter_group.custom_mysql.name
+  storage_encrypted       = true
+  backup_retention_period = 5
+  deletion_protection     = true
   # multi_az               = false
   skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.private_sg.id]

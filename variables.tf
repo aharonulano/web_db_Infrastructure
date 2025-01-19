@@ -11,7 +11,7 @@
 variable "aws_region" {
   description = "(Required) region in which you well deploy your resources"
   type        = string
-  default = "eu-west-1"
+  default     = "eu-west-1"
 }
 
 variable "ec2_ami" {
@@ -30,12 +30,13 @@ variable "instance_type" {
 
 variable "ec2_key" {
   type      = string
+  default   = file("~/.ssh/ec2_key.pub")
   sensitive = true
 }
 
-variable "my_local_ip" {
-  type = string
-}
+# variable "my_local_ip" {
+#   type = string
+# }
 
 variable "cidr_allow_all" {
   type    = string
