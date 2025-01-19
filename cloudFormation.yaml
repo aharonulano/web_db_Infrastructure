@@ -1,0 +1,215 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "CloudFormation template equivalent to the provided Terraform code"
+
+Resources:
+  MainVPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: "Name"
+          Value: "main-vpc"
+
+  PublicSubnet:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref MainVPC
+      CidrBlock: "10.0.1.0/24"
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: !Sub "${AWS::Region}a"
+      Tags:
+        - Key: "Name"
+          Value: "public-subnet"
+
+  PrivateDBSubnet1:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref MainVPC
+      CidrBlock: "10.0.2.0/24"
+      AvailabilityZone: !Sub "${AWS::Region}b"
+      Tags:
+        - Key: "Name"
+          Value: "private-db-subnet_1"
+
+  PrivateDBSubnet2:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref MainVPC
+      CidrBlock: "10.0.3.0/24"
+      AvailabilityZone: !Sub "${AWS::Region}c"
+      Tags:
+        - Key: "Name"
+          Value: "private-db-subnet_2"
+
+  InternetGateway:
+    Type: "AWS::EC2::InternetGateway"
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: "igw-for-main-vpc"
+
+  AttachGateway:
+    Type: "AWS::EC2::VPCGatewayAttachment"
+    Properties:
+      VpcId: !Ref MainVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  ElasticIP:
+    Type: "AWS::EC2::EIP"
+    Properties:
+      Domain: "vpc"
+      Tags:
+        - Key: "Name"
+          Value: "static-ip-for-nat"
+
+  NatGateway:
+    Type: "AWS::EC2::NatGateway"
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      AllocationId: !GetAtt ElasticIP.AllocationId
+      Tags:
+        - Key: "Name"
+          Value: "gw nat"
+
+  PublicRouteTable:
+    Type: "AWS::EC2::RouteTable"
+    Properties:
+      VpcId: !Ref MainVPC
+      Tags:
+        - Key: "Name"
+          Value: "public-rt"
+
+  PublicRoute:
+    Type: "AWS::EC2::Route"
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref InternetGateway
+
+  PublicRouteTableAssociation:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  PrivateRouteTable:
+    Type: "AWS::EC2::RouteTable"
+    Properties:
+      VpcId: !Ref MainVPC
+      Tags:
+        - Key: "Name"
+          Value: "private-rt"
+
+  PrivateRoute:
+    Type: "AWS::EC2::Route"
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: "0.0.0.0/0"
+      NatGatewayId: !Ref NatGateway
+
+  PrivateRouteTableAssociation1:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      SubnetId: !Ref PrivateDBSubnet1
+      RouteTableId: !Ref PrivateRouteTable
+
+  PrivateRouteTableAssociation2:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      SubnetId: !Ref PrivateDBSubnet2
+      RouteTableId: !Ref PrivateRouteTable
+
+  EC2KeyPair:
+    Type: "AWS::EC2::KeyPair"
+    Properties:
+      KeyName: "ec2_key"
+      PublicKeyMaterial: !Ref EC2KeyPublicKey
+
+  PublicSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupName: "public-sg"
+      GroupDescription: "Allow HTTP and SSH access"
+      VpcId: !Ref MainVPC
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: 80
+          ToPort: 80
+          CidrIp: !Ref MyLocalIP
+        - IpProtocol: "tcp"
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref MyLocalIP
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          FromPort: 0
+          ToPort: 0
+          CidrIp: "0.0.0.0/0"
+      Tags:
+        - Key: "Name"
+          Value: "public-sg"
+
+  PrivateSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupName: "private-sg"
+      GroupDescription: "Allow MySQL access and all outbound"
+      VpcId: !Ref MainVPC
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: !GetAtt MainVPC.CidrBlock
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          FromPort: 0
+          ToPort: 0
+          CidrIp: "0.0.0.0/0"
+      Tags:
+        - Key: "Name"
+          Value: "private-sg"
+
+  MySQLDB:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      AllocatedStorage: 10
+      DBName: "mydb"
+      Engine: "mysql"
+      EngineVersion: "8.0"
+      MasterUsername: !Ref DBUserName
+      MasterUserPassword: !Ref DBPassword
+      DBInstanceClass: "db.t3.micro"
+      StorageEncrypted: true
+      BackupRetentionPeriod: 5
+      DeletionProtection: true
+      VPCSecurityGroups:
+        - !Ref PrivateSecurityGroup
+      DBSubnetGroupName: !Ref DBSubnetGroup
+
+  DBSubnetGroup:
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties:
+      DBSubnetGroupDescription: "Subnets for the RDS instance"
+      SubnetIds:
+        - !Ref PrivateDBSubnet1
+        - !Ref PrivateDBSubnet2
+
+Parameters:
+  MyLocalIP:
+    Type: String
+    Default: "0.0.0.0/0"
+    Description: "Your local IP for SSH and HTTP access."
+
+  DBUserName:
+    Type: String
+    Description: "Database master username."
+
+  DBPassword:
+    Type: String
+    Description: "Database master password."
+
+  EC2KeyPublicKey:
+    Type: String
+    Description: "The public key material for the EC2 Key Pair."
