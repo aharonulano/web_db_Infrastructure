@@ -3,10 +3,10 @@
 #   type        = string
 # }
 
-variable "profile_name" {
-  description = "(Required) profile name"
-  type        = string
-}
+# variable "profile_name" {
+#   description = "(Required) profile name"
+#   type        = string
+# }
 
 variable "aws_region" {
   description = "(Required) region in which you well deploy your resources"
