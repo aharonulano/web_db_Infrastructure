@@ -34,12 +34,14 @@
 - but i disabled tfsec because of running out of time.
 - there are terraform init, plan, and apply,
 - end there is another config file that schedules it down at midnight every day,
-- we can also add the commands to of the shutting down to the end of the apply file and it will apply and destroy rite away.
-- you will need to add to github actions your aws secrets like access key id and and the session 
+- we can also add the commands to of the shutting down to the end of the apply file, and it will apply and destroy rite away.
+- you will need to add to GitHub actions your aws secrets like access key id and the session 
+
+- there is a cloudFormation.yaml attached to
 
 - this answers on the home assignment without the bonus...
 - i worked on the bonus eks with argoCD but didn't complete it yet so i didn't publish it
-- if you will like to cee it you can contact me and i'll show you...
-- tanks for this assignment it it was written very good ! 
+- if you would like to see it you can contact me and i'll show you... 
+- thanks for this assignment it was written very good ! 
 
 
