@@ -187,15 +187,15 @@
 name: Terraform CI/CD
 
 on:
-#  push:
-#    branches:
-#      - main
-#  pull_request:
-#    branches:
-#      - main
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight, adjust as needed
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+#  workflow_dispatch:
+#  schedule:
+#    - cron: '0 0 * * *' # Runs every day at midnight, adjust as needed
 
 jobs:
   terraform:
@@ -270,3 +270,9 @@ jobs:
       run: terraform apply -auto-approve tfplan
       env:
         ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+
+    - name: 'Terraform Plan Destroy'
+      run: terraform plan -destroy -out=tfplan-destroy
+
+    - name: 'Terraform Apply Destroy'
+      run: terraform apply -auto-approve tfplan-destroy
