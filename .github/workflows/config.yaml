@@ -22,10 +22,12 @@ jobs:
       uses: actions/checkout@v2
 
     - name: 'Configure AWS credentials'
-      uses: aws-actions/configure-aws-credentials@v3
+      uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
         aws-region: ${{ env.AWS_REGION }}
 
     - name: 'Set up Terraform'
