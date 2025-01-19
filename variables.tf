@@ -1,12 +1,13 @@
-# variable "account" {
-#   description = "(Required) account ID"
-#   type        = string
-# }
+variable "account" {
+  description = "(Required) account ID"
+  type        = string
+}
 
-# variable "profile_name" {
-#   description = "(Required) profile name"
-#   type        = string
-# }
+variable "profile_name" {
+  description = "(Required) profile name"
+  type        = string
+  default = "defualt"
+}
 
 variable "aws_region" {
   description = "(Required) region in which you well deploy your resources"

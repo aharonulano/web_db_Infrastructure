@@ -17,10 +17,3 @@ output "dns_entry" {
   value       = aws_vpc_endpoint.ec2.dns_entry
   description = "dns a domain name system to entry ec2 via private endpoint via link"
 }
-# output "argocd_initial_admin_secret" {
-#   value =
-# }
-
-# argocd_initial_admin_secret = "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d"
-# argocd_server_load_balancer = "a53a6bf4abebe46f79da6179425ca5f4-7d359c1121a50305.elb.eu-west-1.amazonaws.com"
-# eks_connect = "aws eks --region eu-west-1 update-kubeconfig --name main-eks-cluster"

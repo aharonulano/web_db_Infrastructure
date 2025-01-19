@@ -302,12 +302,11 @@ resource "aws_db_instance" "private_db" {
   instance_class          = "db.t3.micro"
   username                = "aumichome"
   password                = "assignment"
-  parameter_group_name    = aws_db_parameter_group.custom_mysql.name
   storage_encrypted       = true
   backup_retention_period = 5
   deletion_protection     = true
-  # multi_az               = false
   skip_final_snapshot    = true
+  parameter_group_name    = aws_db_parameter_group.custom_mysql.name
   vpc_security_group_ids = [aws_security_group.private_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.sub_group.name
 }
