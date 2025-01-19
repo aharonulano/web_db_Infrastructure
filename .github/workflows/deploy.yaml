@@ -255,7 +255,10 @@ jobs:
 #      run: tfsec .
 
     - name: 'Terraform Plan'
-      run: terraform plan -var="account=${{ secrets.AWS_ACCOUNT_ID }}" -out=tfplan
+      run: |
+        terraform plan -out=tfplan
+        echo ${{secrets.AWS_ACCOUNT_ID}}
+#        var="account=${{ secrets.AWS_ACCOUNT_ID }}"
 #      env:
 #        ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
 
