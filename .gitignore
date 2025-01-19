@@ -13,5 +13,5 @@ k8s_yaml_files/argo-app.yaml
 k8s_yaml_files/config.yaml
 k8s_yaml_files/deployment.yaml
 k8s_yaml_files/route53.tf
-web_db_infra.yaml
+k8s_yaml_files/web_db_infra.yaml
 
