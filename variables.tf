@@ -34,9 +34,10 @@ variable "ec2_key" {
   sensitive = true
 }
 
-# variable "my_local_ip" {
-#   type = string
-# }
+variable "my_local_ip" {
+  type = string
+  default = "0.0.0.0/0"
+}
 
 variable "cidr_allow_all" {
   type    = string
