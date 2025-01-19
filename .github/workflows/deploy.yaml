@@ -256,9 +256,9 @@ jobs:
 
     - name: 'Terraform Plan'
       run: |
-        terraform plan -out=tfplan
+        terraform plan -out=tfplan -var="account_id"=${{ secrets.AWS_ACCOUNT_ID }}
         var.account: ${{ secrets.AWS_ACCOUNT_ID }} 
 
     - name: 'Terraform Apply'
       if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve tfplan
+      run: terraform apply -auto-approve tfplan -var="account_id"=${{ secrets.AWS_ACCOUNT_ID }}
