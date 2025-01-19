@@ -30,7 +30,7 @@ variable "instance_type" {
 
 variable "ec2_key" {
   type      = string
-  default   = file("~/.ssh/ec2_key.pub")
+  default   = "~/.ssh/ec2_key.pub"
   sensitive = true
 }
 
