@@ -218,17 +218,17 @@ resource "aws_security_group" "private_sg" {
   # }
 }
 
-resource "aws_key_pair" "ec2_key" {
-  key_name   = "ec2_key"
-  public_key = file(var.ec2_key)
-}
+# resource "aws_key_pair" "ec2_key" {
+#   key_name   = "ec2_key"
+#   public_key = file(var.ec2_key)
+# }
 
 # resource "aws_elb" "" {}
 resource "aws_instance" "web_ec2" {
   ami                         = var.ec2_ami
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public.id
-  key_name                    = aws_key_pair.ec2_key.key_name
+  # key_name                    = aws_key_pair.ec2_key.key_name
   associate_public_ip_address = true
   availability_zone           = "${var.aws_region}a"
   security_groups             = [aws_security_group.public_sg.id]

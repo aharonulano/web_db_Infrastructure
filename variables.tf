@@ -28,11 +28,11 @@ variable "instance_type" {
   default = "t3.micro"
 }
 
-variable "ec2_key" {
-  type      = string
-  default   = "~/.ssh/ec2_key.pub"
-  # sensitive = true
-}
+# variable "ec2_key" {
+#   type      = string
+#   default   = "~/.ssh/ec2_key.pub"
+#   # sensitive = true
+# }
 
 variable "my_local_ip" {
   type = string
