@@ -92,7 +92,7 @@ on:
       - main
 
 jobs:
-  tf:
+  terraform:
     name: 'Terraform Lint, Security Check, and Deploy'
     runs-on: ubuntu-latest
 
