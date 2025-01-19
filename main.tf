@@ -327,7 +327,7 @@ resource "aws_db_subnet_group" "sub_group" {
 #     from_port  = 443
 #     to_port    = 443
 #   }
-#
+
 #   ingress {
 #     protocol   = "tcp"
 #     rule_no    = 100
@@ -408,6 +408,7 @@ resource "aws_db_subnet_group" "sub_group" {
 #     Name = "foobar-terraform-elb"
 #   }
 # }
+
 
 
 # resource "aws_rds_cluster" "rds_c" {
