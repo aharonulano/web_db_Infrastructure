@@ -112,6 +112,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: 'Set up Terraform'
@@ -153,7 +154,16 @@ jobs:
         run: |
           tflint --init
           tflint
-#
+
+      - name: 'Terraform Plan'
+        run: |
+          terraform plan -out=tfplan
+          
+
+    - name: 'Terraform Apply'
+      if: github.ref == 'refs/heads/main'
+      run: terraform apply -auto-approve tfplan
+
 #      - name: 'tfsec'
 #        run: tfsec .
 
@@ -161,13 +171,13 @@ jobs:
 #        env: ${{ secrets.AWS_ACCOUNT_ID }}
 #        run: terraform plan -var="account_id=${AWS_ACCOUNT_ID"
 
-      - name: Terraform Plan
-        run: terraform plan -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
+#      - name: Terraform Plan
+#        run: terraform plan -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
       # Step 6 (Optional): Terraform Apply
 #      - name: Terraform Apply
 #        env: ${{ secrets.AWS_ACCOUNT_ID }}
 #        if: github.ref == 'refs/heads/main'
 #        run: terraform apply -auto-approve -var="account_id=$AWS_ACCOUNT_ID"
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
+#      - name: Terraform Apply
+#        if: github.ref == 'refs/heads/main'
+#        run: terraform apply -auto-approve -var="account_id=${{ secrets.AWS_ACCOUNT_ID }}"
