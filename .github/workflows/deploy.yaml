@@ -255,10 +255,12 @@ jobs:
 #      run: tfsec .
 
     - name: 'Terraform Plan'
-      run: |
-        terraform plan -out=tfplan -var="account_id"=${{ secrets.AWS_ACCOUNT_ID }}
-        var.account: ${{ secrets.AWS_ACCOUNT_ID }} 
+      run: terraform plan -out=tfplan
+      env:
+        ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
 
     - name: 'Terraform Apply'
       if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve tfplan -var="account_id"=${{ secrets.AWS_ACCOUNT_ID }}
+      run: terraform apply -auto-approve tfplan
+      env:
+        ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
