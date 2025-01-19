@@ -56,8 +56,3 @@ variable "cidr_allow_all" {
   type    = string
   default = "1.2.3.4/32"
 }
-
-variable "domain_mydevops_link" {
-  type    = string
-  default = "aurt53link.com"
-}
