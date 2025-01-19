@@ -255,9 +255,9 @@ jobs:
 #      run: tfsec .
 
     - name: 'Terraform Plan'
-      run: terraform plan -out=tfplan
-      env:
-        ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      run: terraform plan -var="account=${{ secrets.AWS_ACCOUNT_ID }}" -out=tfplan
+#      env:
+#        ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
 
     - name: 'Terraform Apply'
       if: github.ref == 'refs/heads/main'
