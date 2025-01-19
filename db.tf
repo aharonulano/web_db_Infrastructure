@@ -17,8 +17,8 @@ resource "aws_db_instance" "private_db" {
   engine                  = "mysql"
   engine_version          = "8.0"
   instance_class          = "db.t3.micro"
-  username                = "aumichome"
-  password                = "assignment"
+  username                = var.db_user_name
+  password                = var.db_password
   storage_encrypted       = true
   backup_retention_period = 5
   deletion_protection     = true

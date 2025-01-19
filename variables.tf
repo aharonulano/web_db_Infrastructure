@@ -1,7 +1,7 @@
 variable "account" {
   description = "(Required) account ID"
   type        = string
-  default = "put/here/your/account/id"
+  default     = "put/here/your/account/id"
 }
 
 variable "profile_name" {
@@ -14,6 +14,20 @@ variable "aws_region" {
   description = "(Required) region in which you well deploy your resources"
   type        = string
   default     = "eu-west-1"
+}
+
+variable "db_user_name" {
+  description = "(Required)"
+  type        = string
+  default     = "aumichome"
+  sensitive   = true
+}
+
+variable "db_password" {
+  description = "(Required)"
+  type        = string
+  default     = "assignment"
+  sensitive   = true
 }
 
 variable "ec2_ami" {
