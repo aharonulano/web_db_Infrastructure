@@ -3,10 +3,7 @@ name: Terraform Cleanup
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 12 * * *' # Runs every day at midnight, adjust as needed
-      #  push:
-      #    branches:
-      #      - main
+    - cron: '0 0 * * *' # Runs every day at midnight, adjust as needed
 
 jobs:
   terraform-cleanup:
@@ -26,12 +23,10 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-        aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
         aws-region: ${{ env.AWS_REGION }}
 
     - name: 'Set up Terraform'
-      uses: hashicorp/setup-terraform@v3
+      uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: ${{ env.TF_VERSION }}
 
